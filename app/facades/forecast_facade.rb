@@ -1,7 +1,7 @@
 class WeatherFacade
-  def get_forecast(location)
+  def weather_forecast(location, days)
     lat_lon = MapService.get_coordinates(location)
-    forcast_data = WeatherService.get_forecast(lat_lon)
+    forecast_data = WeatherService.get_forecast(lat_lon, days)
   end
 
 
