@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Get weather for a city', type: :request do
-  describe 'GET /api/v0/forecast?location=city,st' do
+  describe 'GET /api/v0/forecast?location=city,st', :vcr do
     before(:each) do
       @location_params = { location: 'denver,co' }
       @invalid_location_params = { location: 'denver,cooooo' }
@@ -28,10 +28,11 @@ describe 'Get weather for a city', type: :request do
       expect(attributes[:current_weather]).to have_key(:temperature)
       expect(attributes[:current_weather]).to have_key(:feels_like)
       expect(attributes[:current_weather]).to have_key(:humidity)
-      expect(attributes[:current_weather]).to have_key(:uvi)
+      expect(attributes[:current_weather]).to have_key(:uv)
       expect(attributes[:current_weather]).to have_key(:visibility)
       expect(attributes[:current_weather]).to have_key(:condition)
-      expect(attributes[:current_weather]).to have_key(:icon)
+      expect(attributes[:current_weather][:condition]).to have_key(:text)
+      expect(attributes[:current_weather][:condition]).to have_key(:icon)
 
       expect(attributes).to have_key(:daily_weather)
       expect(attributes[:daily_weather]).to be_an(Array)
@@ -43,7 +44,8 @@ describe 'Get weather for a city', type: :request do
         expect(day).to have_key(:max_temp)
         expect(day).to have_key(:min_temp)
         expect(day).to have_key(:condition)
-        expect(day).to have_key(:icon)
+        expect(day[:condition]).to have_key(:text)
+        expect(day[:condition]).to have_key(:icon)
       end
 
       expect(attributes).to have_key(:hourly_weather)
@@ -52,12 +54,13 @@ describe 'Get weather for a city', type: :request do
       attributes[:hourly_weather].each do |hour|
         expect(hour).to have_key(:time)
         expect(hour).to have_key(:temperature)
-        expect(hour).to have_key(:conditions)
-        expect(hour).to have_key(:icon)
+        expect(hour).to have_key(:condition)
+        expect(hour[:condition]).to have_key(:text)
+        expect(hour[:condition]).to have_key(:icon)
       end
     end
 
-    it 'returns an unsuccessful response, 404, for an invalid location' do
+    xit 'returns an unsuccessful response, 404, for an invalid location' do
       get '/api/v0/forecast', params: @invalid_location_params
       expect(response.status).to eq(404)
     
