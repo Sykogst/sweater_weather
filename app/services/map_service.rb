@@ -17,7 +17,7 @@ class MapService
   private
   # REFACTOR: MAYBE add some error messaging for making sure API conn made to MapQuest
   def parse_coordinates(data) 
-    coordinates = data[:results][0][:locations][0][:latLng]
+    coordinates = data[:results].first[:locations].first[:latLng]
     lat_lon = "#{coordinates[:lat]},#{coordinates[:lng]}"
   end
 end

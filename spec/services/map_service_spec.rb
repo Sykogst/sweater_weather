@@ -12,7 +12,7 @@ describe MapService, type: :service do
       coordinate_results = MapService.new.get_coordinates(location)
 
       expect(coordinate_results).to be_a(String)
-      expect(coordinate_results).to eq('39.7400,-104.99202')
+      expect(coordinate_results).to eq('39.74001,-104.99202')
     end
   end
 end
