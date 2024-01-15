@@ -5,12 +5,12 @@ class MunchieAttributes
               :name,
               :rating,
               :reviews
-              
+
   def initialize(weather_data, yelp_data)
     @destination_city = "#{weather_data[:location][:name]}, #{weather_data[:location][:region]}"
     @forecast = {
-      summary: weather_data[:current][:temp_f].to_s,
-      temperature: weather_data[:current][:condition][:text]
+      summary: weather_data[:current][:condition][:text],
+      temperature: weather_data[:current][:temp_f].to_s
     }
     @name = yelp_data[:name]
     @address = yelp_data[:location][:display_address].first

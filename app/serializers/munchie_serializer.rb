@@ -1,5 +1,5 @@
 # app/serializers/munchie_attributes_serializer.rb
-class MunchieAttributesSerializer
+class MunchieSerializer
   def initialize(munchie)
     @munchie = munchie
   end

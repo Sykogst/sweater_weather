@@ -8,15 +8,13 @@ describe 'Get food and forcast information for desination city', type: :request 
       expect(response.status).to eq(200)
 
       data = JSON.parse(response.body, symbolize_names: true)
-      expect(data).to have_key[:data]
+      expect(data).to have_key(:data)
       expect(data[:data]).to have_key(:id)
-      expect(data[:data][:id]).to eq("null")
+      expect(data[:data][:id]).to eq(nil)
       expect(data[:data]).to have_key(:type)
       expect(data[:data][:type]).to eq("munchie")
       expect(data[:data]).to have_key(:attributes)
-      expect(data[:data][:id][:attributes]).to be_a(Hash)
-      expect(data[:data]).to have_key(:restaurant)
-      expect(data[:data][:id][:restaurant]).to be_a(Hash)
+      expect(data[:data][:attributes]).to be_a(Hash)
 
       attributes = data[:data][:attributes]
       expect(attributes).to have_key(:destination_city)
@@ -28,7 +26,7 @@ describe 'Get food and forcast information for desination city', type: :request 
       expect(attributes[:forecast]).to have_key(:temperature)
       expect(attributes[:forecast][:temperature]).to be_a(String)
 
-      restaurant = data[:data][:restauraunt]
+      restaurant = data[:data][:attributes][:restaurant]
       expect(restaurant).to have_key(:name)
       expect(restaurant[:name]).to be_a(String)
       expect(restaurant).to have_key(:address)

@@ -19,8 +19,8 @@ RSpec.describe MunchieAttributes do
       munchie_attributes = described_class.new(weather_data, yelp_data)
 
       expect(munchie_attributes.destination_city).to eq('Pueblo, CO')
-      expect(munchie_attributes.forecast[:summary]).to eq('75')
-      expect(munchie_attributes.forecast[:temperature]).to eq('Sunny')
+      expect(munchie_attributes.forecast[:summary]).to eq('Sunny')
+      expect(munchie_attributes.forecast[:temperature]).to eq('75')
       expect(munchie_attributes.name).to eq('La Forchetta Da Massi')
       expect(munchie_attributes.address).to eq('126 S Union Ave, Pueblo, CO 81003')
       expect(munchie_attributes.rating).to eq(4.5)
