@@ -1,4 +1,11 @@
 class MunchieAttributes
+  attr_reader :address,
+              :destination_city,
+              :forecast,
+              :name,
+              :rating,
+              :reviews
+              
   def initialize(weather_data, yelp_data)
     @destination_city = "#{weather_data[:location][:name]}, #{weather_data[:location][:region]}"
     @forecast = {
