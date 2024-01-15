@@ -1,8 +1,9 @@
 class Api::V1::MunchiesController < ApplicationController
-  def weather_forecast
-    desitination = params[:desitination]
+  def search
+    destination = params[:destination]
     food = params[:food]
 
-    # render json: ForecastSerializer.new(forecast_data).to_json, status: :ok
+    munchies_data = MunchiesFacade.new.munchies(destination, food)
+    render json: MunchiesSerializer.new(munchies_data).to_json, status: :ok
   end
 end
