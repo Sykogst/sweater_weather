@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     namespace :v0 do
       get '/forecast', to: 'forecast#weather_forecast'
     end
+
+    namespace :v1 do
+      get '/munchies', to: 'munchies#search'
+    end
   end
 end
