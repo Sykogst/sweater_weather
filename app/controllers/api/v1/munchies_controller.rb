@@ -3,7 +3,7 @@ class Api::V1::MunchiesController < ApplicationController
     destination = params[:destination]
     food = params[:food]
 
-    munchies_data = MunchiesFacade.new.munchies(destination, food)
-    render json: MunchiesSerializer.new(munchies_data).to_json, status: :ok
+    munchie_data = MunchiesFacade.new.munchies(destination, food)
+    render json: MunchieSerializer.new(munchie_data).to_json, status: :ok
   end
 end
