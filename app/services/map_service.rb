@@ -10,5 +10,15 @@ class MapService
       request.url('/address')
       request.params['location'] = location
     end
+    data = JSON.parse(response.body, symbolize_names: true)
+    parse_coordinates(data)
   end
+  
+  def parse_coordinates(data)
+    coordinates = data[:results].first[:locations].first[:latLing]
+    lat_lon = "#{coordinates[:lat]},#{coordinates[:lon]}"
+  end
+
+  private
+  
 end
