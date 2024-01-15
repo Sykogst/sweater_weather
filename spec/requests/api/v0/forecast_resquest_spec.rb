@@ -7,7 +7,7 @@ describe 'Get weather for a city', type: :request do
       @invalid_location_params = { location: 'denver,cooooo' }
     end
 
-    it 'returns a successful response, 200' do
+    it 'returns a successful response, 200, for a valid location' do
       get '/api/v0/forecast', params: @location_params
       expect(response.status).to eq(200)
     end
@@ -58,7 +58,7 @@ describe 'Get weather for a city', type: :request do
     end
 
     it 'returns an unsuccessful response, 404, for an invalid location' do
-      get '/api/v0/forecast', params: invalid_location_params
+      get '/api/v0/forecast', params: @invalid_location_params
       expect(response.status).to eq(404)
     
       error_response = JSON.parse(response.body, symbolize_names: true)
