@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Road trip based on json payload in body', type: :request do
   describe 'POST /api/v0/road_trip', :vcr do
-    xit 'creates a new road trip and returns the expected response' do
+    it 'creates a new road trip and returns the expected response' do
       user = create(:user)
       valid_payload = {
         origin: 'Cincinnati,OH',

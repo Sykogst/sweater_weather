@@ -25,20 +25,67 @@ class RoadTripFacade
       'Impossible Route'
     else
       travel_time_seconds = travel_time[0..1].to_i * 3600 + travel_time[3..4].to_i * 60 + travel_time[6..7].to_i
-      current_time = Time.now
-  
-      arrival_time = current_time + travel_time_seconds.seconds
+      arrival_time = Time.now + travel_time_seconds.seconds
       rounded_arrival_time = arrival_time.beginning_of_hour + ((arrival_time.min / 60).round) * 60.seconds # Rounds down
-      forecastday_date = rounded_arrival_time.strftime("%Y-%m-%d")
-      hour_time = rounded_arrival_time.strftime("%Y-%m-%d %H:%M")
+
+      forecastday_date = rounded_arrival_time.strftime('%Y-%m-%d')
+      hour_time = rounded_arrival_time.strftime('%Y-%m-%d %H:%M')
       time_hash = { forecastday_date: forecastday_date, hour_time: hour_time }
     end
   end
 
-  def weather_forecast_eta(origin, destination)
-    lat_lon = MapService.new.get_coordinates(destination)
+  def weather_at_eta(origin_place, destination_place)
+    lat_lon = MapService.new.get_coordinates(destination_place)
     forecast_data = WeatherService.new.get_forecast(lat_lon, 7) # Max for free API is 7 days out
+    arrival_data = calculate_arrival_time(origin_place, destination_place)
 
+    if arrival_data == 'Impossible Route'
+      weather_at_eta = {
+        datetime: 'Impossible Route',
+        temperature: 'Impossible Route',
+        condition: 'Impossible Route'
+      }
+    elsif past_forecast?(forecast_data, arrival_data)
+      weather_at_eta = {
+        datetime: 'Arrival Past Last Forecast',
+        temperature: 'Arrival Past Last Forecast',
+        condition: 'Arrival Past Last Forecast'
+      }
+    else
+      find_hourly_forecast(forecast_data, arrival_data)
+    end
+  end
 
+  def find_hourly_forecast(forecast_data, arrival_data)
+    just_date = arrival_data[:forecastday_date]
+    full_date = arrival_data[:hour_time]
+
+    forecast_daily = forecast_data[:forecast][:forecastday] # Array of hashes of Daily data, find matching one based on date
+    matching_day = forecast_daily.find { |day| day[:date] == just_date }  # forecastday hash from array
+    if matching_day
+      matching_hour = matching_day[:hour].find { |hour| hour[:time] == full_date }
+      weather_at_eta = {
+        datetime: matching_hour[:time],
+        temperature: matching_hour[:temp_f],
+        condition: matching_hour[:condition][:text]
+      }
+    else
+      weather_at_eta = {
+        datetime: 'No Weather Data',
+        temperature: 'No Weather Data',
+        condition: 'No Weather Data'
+      }
+    end
+  end
+
+  def past_forecast?(forecast_data, arrival_data)
+    today_date_time = forecast_data.dig(:location, :local_time)
+  
+    return false unless today_date_time
+  
+    rounded_time = today_date_time.floor(1.hour)
+    days_difference = (arrival_data[:forecastday_date] - rounded_time) / 1.day
+  
+    days_difference > 7
   end
 end
