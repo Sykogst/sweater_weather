@@ -18,22 +18,6 @@ class RoadTripFacade
     end
   end
 
-  def calculate_arrival_time(origin, destination)
-    travel_time = directions_data(origin, destination)[:travel_time]
-  
-    if travel_time == 'Impossible Route'
-      'Impossible Route'
-    else
-      travel_time_seconds = travel_time[0..1].to_i * 3600 + travel_time[3..4].to_i * 60 + travel_time[6..7].to_i
-      arrival_time = Time.now + travel_time_seconds.seconds
-      rounded_arrival_time = arrival_time.beginning_of_hour + ((arrival_time.min / 60).round) * 60.seconds # Rounds down
-
-      forecastday_date = rounded_arrival_time.strftime('%Y-%m-%d')
-      hour_time = rounded_arrival_time.strftime('%Y-%m-%d %H:%M')
-      time_hash = { forecastday_date: forecastday_date, hour_time: hour_time }
-    end
-  end
-
   def weather_at_eta(origin_place, destination_place)
     lat_lon = MapService.new.get_coordinates(destination_place)
     forecast_data = WeatherService.new.get_forecast(lat_lon, 7) # Max for free API is 7 days out
@@ -56,6 +40,33 @@ class RoadTripFacade
     end
   end
 
+  def calculate_arrival_time(origin, destination)
+    travel_time = directions_data(origin, destination)[:travel_time]
+  
+    if travel_time == 'Impossible Route'
+      'Impossible Route'
+    else
+      travel_time_seconds = travel_time[0..1].to_i * 3600 + travel_time[3..4].to_i * 60 + travel_time[6..7].to_i
+      arrival_time = Time.now + travel_time_seconds.seconds
+      rounded_arrival_time = arrival_time.beginning_of_hour + ((arrival_time.min / 60).round) * 60.seconds # Rounds down
+
+      forecastday_date = rounded_arrival_time.strftime('%Y-%m-%d')
+      hour_time = rounded_arrival_time.strftime('%Y-%m-%d %H:%M')
+      time_hash = { forecastday_date: forecastday_date, hour_time: hour_time }
+    end
+  end
+
+  def past_forecast?(forecast_data, arrival_data)
+    today_date_time = forecast_data.dig(:location, :local_time)
+  
+    return false unless today_date_time
+  
+    rounded_time = today_date_time.floor(1.hour)
+    days_difference = (arrival_data[:forecastday_date] - rounded_time) / 1.day
+  
+    days_difference > 7
+  end
+
   def find_hourly_forecast(forecast_data, arrival_data)
     just_date = arrival_data[:forecastday_date]
     full_date = arrival_data[:hour_time]
@@ -76,16 +87,5 @@ class RoadTripFacade
         condition: 'No Weather Data'
       }
     end
-  end
-
-  def past_forecast?(forecast_data, arrival_data)
-    today_date_time = forecast_data.dig(:location, :local_time)
-  
-    return false unless today_date_time
-  
-    rounded_time = today_date_time.floor(1.hour)
-    days_difference = (arrival_data[:forecastday_date] - rounded_time) / 1.day
-  
-    days_difference > 7
   end
 end
