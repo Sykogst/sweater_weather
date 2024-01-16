@@ -3,8 +3,8 @@ class Api::V0::SessionsController < ApplicationController
     payload = JSON.parse(request.body.read, symbolize_names: true)
     email = payload[:email]
     password = payload[:password]
+    
     user = User.find_by(email: email)
-
     if user && user.authenticate(password)
       render json: { data: { type: 'users', id: user.id.to_s, attributes: { email: user.email, api_key: user.api_key } } }, status: :ok
     else

@@ -13,7 +13,8 @@ class Api::V0::UsersController < ApplicationController
   private 
   
   def user_params
-    params.permit(:email, :password, :password_confirmation)
+    payload = JSON.parse(request.body.read, symbolize_names: true)
+    ActionController::Parameters.new(payload).permit(:email, :password, :password_confirmation)
   end
 
   def handle_error(exception)

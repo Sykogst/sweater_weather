@@ -10,7 +10,7 @@ RSpec.describe 'Create users, email, password ', type: :request do
         password_confirmation: user.password_confirmation
       }
 
-      post '/api/v0/users', params: valid_new_user_params, headers: { 'Content_Type' => 'application/json', 'Accept' => 'application/json' }
+      post '/api/v0/users', params: valid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).to be_successful
       expect(response.status).to eq(201)
 
@@ -33,7 +33,7 @@ RSpec.describe 'Create users, email, password ', type: :request do
         password_confirmation: 'Password123'
       }
 
-      post '/api/v0/users', params: invalid_new_user_params, headers: { 'Content_Type' => 'application/json', 'Accept' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).not_to be_successful
       expect(response.status).to eq(422)
 
@@ -49,7 +49,7 @@ RSpec.describe 'Create users, email, password ', type: :request do
         password_confirmation: 'DoesNotMatch'
       }
 
-      post '/api/v0/users', params: invalid_new_user_params, headers: { 'Content_Type' => 'application/json', 'Accept' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).not_to be_successful
       expect(response.status).to eq(422)
 
@@ -65,8 +65,8 @@ RSpec.describe 'Create users, email, password ', type: :request do
         password_confirmation: 'Password123'
       }
 
-      post '/api/v0/users', params: invalid_new_user_params, headers: { 'Content_Type' => 'application/json', 'Accept' => 'application/json' }
-      post '/api/v0/users', params: invalid_new_user_params, headers: { 'Content_Type' => 'application/json', 'Accept' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
 
       expect(response.status).to eq(422)
 
