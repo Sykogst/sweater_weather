@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v0 do
       get '/forecast', to: 'forecast#weather_forecast'
       resources :users, only: [:create]
+      resources :sessions, only: [:create]
     end
 
     namespace :v1 do
