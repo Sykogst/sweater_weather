@@ -18,7 +18,7 @@ describe MapService, type: :service do
     it '#get_directions, returns directions data from origin to destination' do
       origin = 'denver,co'
       destination = 'boulder,co'
-      direction_results = MapService.new.get_coordinates(location)
+      direction_results = MapService.new.get_firections(origin, destination)
 
       expect(direction_results).to be_a(Hash)
     end

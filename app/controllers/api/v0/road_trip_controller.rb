@@ -7,6 +7,6 @@ class Api::V0::RoadTripController < ApplicationController
     api_key = payload[:api_key]
 
     road_trip_data = RoadTripFacade.new(origin, destination)
-    render json: RoadTripSerializer.new(munchie_data).to_json, status: :ok
+    render json: RoadTripSerializer.new(road_trip_data).to_json, status: :ok
   end
 end
