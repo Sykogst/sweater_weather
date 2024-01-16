@@ -1,6 +1,6 @@
 class ForecastSerializer
-  def initialize(forecast)
-    @forecast = forecast
+  def initialize(forecast_data)
+    @data = forecast_data
   end
 
   def to_json
@@ -10,18 +10,18 @@ class ForecastSerializer
         type: 'forecast',
         attributes: {
           current_weather: {
-            last_updated: @forecast[:current][:last_updated],
-            temperature: @forecast[:current][:temp_f],
-            feels_like: @forecast[:current][:feelslike_f],
-            humidity: @forecast[:current][:humidity],
-            uv: @forecast[:current][:uv],
-            visibility: @forecast[:current][:vis_miles],
+            last_updated: @data[:current][:last_updated],
+            temperature: @data[:current][:temp_f],
+            feels_like: @data[:current][:feelslike_f],
+            humidity: @data[:current][:humidity],
+            uv: @data[:current][:uv],
+            visibility: @data[:current][:vis_miles],
             condition: {
-              text: @forecast[:current][:condition][:text],
-              icon: @forecast[:current][:condition][:icon]
+              text: @data[:current][:condition][:text],
+              icon: @data[:current][:condition][:icon]
             }
           },
-          daily_weather: @forecast[:forecast][:forecastday].map do |day|
+          daily_weather: @data[:forecast][:forecastday].map do |day|
             {
               date: day[:date],
               sunrise: day[:astro][:sunrise],
@@ -34,7 +34,7 @@ class ForecastSerializer
               }
             }
           end,
-          hourly_weather: @forecast[:forecast][:forecastday][0][:hour].map do |hour|
+          hourly_weather: @data[:forecast][:forecastday][0][:hour].map do |hour|
             {
               time: hour[:time][-5..-1],
               temperature: hour[:temp_f],
