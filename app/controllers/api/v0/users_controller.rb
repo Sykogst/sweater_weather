@@ -1,20 +1,29 @@
 class Api::V0::UsersController < ApplicationController
-  rescue_from ActionController::ParameterMissing, with: :param_missing_error_response
-  rescue_from ActiveRecord::RecordInvalid, with: :validation_error_response
-  
   def create
-    user = User.new(user_params)
+    begin
+      user = User.new(user_params)
+      user.save!
 
-    if user.save
       render json: UserSerializer.new(user), status: :created
-    else
-      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity 
+    rescue ActiveRecord::RecordInvalid => exception
+      handle_record_invalid(exception)
     end
   end
 
   private 
   
   def user_params
-    params.requre(:user).permit(:email, :password, :password_confirmation)
+    params.permit(:email, :password, :password_confirmation)
+  end
+
+  def handle_record_invalid(exception)
+    case exception.message
+    when /Email has already been taken/
+      render json: ErrorSerializer.new(ErrorMessage.new('Email has already been taken', 422)).error_json, status: :unprocessable_entity
+    when /Password confirmation doesn't match Password/
+      render json: ErrorSerializer.new(ErrorMessage.new('Password confirmation doesn\'t match Password', 422)).error_json, status: :unprocessable_entity
+    else
+      render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 422)).error_json, status: :unprocessable_entity
+    end
   end
 end
