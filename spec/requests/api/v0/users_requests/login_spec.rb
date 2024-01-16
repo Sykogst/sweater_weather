@@ -4,9 +4,9 @@ RSpec.describe 'Create users, email, password ', type: :request do
   describe 'POST /api/v0/sessions' do
     it 'valid credentials are sent, then has response' do
       user = create(:user, email: 'test@email.com', password: 'password', password_confirmation: 'password')
-      valid_session_params = { email: user.email, password: user.password }
+      valid_session_payload = { email: user.email, password: user.password }
 
-      post '/api/v0/sessions', params: valid_session_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/sessions', params: valid_session_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).to be_successful
       expect(response.status).to eq(200)
 
@@ -25,9 +25,9 @@ RSpec.describe 'Create users, email, password ', type: :request do
 
     it 'returns error for invalid credentials, wrong email, same message for wrong email or password' do
       user = create(:user, email: 'test@email.com', password: 'password', password_confirmation: 'password')
-      invalid_session_params = { email: 'wrong@email.com', password: user.password }
+      invalid_session_payload = { email: 'wrong@email.com', password: user.password }
       
-      post '/api/v0/sessions', params: invalid_session_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/sessions', params: invalid_session_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).not_to be_successful
       expect(response.status).to eq(401)
 
@@ -39,9 +39,9 @@ RSpec.describe 'Create users, email, password ', type: :request do
 
     it 'returns error for invalid credentials, wrong email, same message for wrong email or password' do
       user = create(:user, email: 'test@email.com', password: 'password', password_confirmation: 'password')
-      invalid_session_params = { email: user.email, password: 'WrongPassword'}
+      invalid_session_payload = { email: user.email, password: 'WrongPassword'}
       
-      post '/api/v0/sessions', params: invalid_session_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/sessions', params: invalid_session_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).not_to be_successful
       expect(response.status).to eq(401)
 

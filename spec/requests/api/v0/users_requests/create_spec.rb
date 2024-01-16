@@ -4,13 +4,13 @@ RSpec.describe 'Create users, email, password ', type: :request do
   describe 'POST /api/v0/users' do
     it 'creates new user with valid parameters' do
       user = build(:user)
-      valid_new_user_params = {
+      valid_new_user_payload = {
         email: user.email,
         password: user.password,
         password_confirmation: user.password_confirmation
       }
 
-      post '/api/v0/users', params: valid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/users', params: valid_new_user_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).to be_successful
       expect(response.status).to eq(201)
 
@@ -28,12 +28,12 @@ RSpec.describe 'Create users, email, password ', type: :request do
     end
   
     it 'returns error for invalid parameters, missing email' do
-      invalid_new_user_params = {
+      invalid_new_user_payload = {
         password: 'Password123',
         password_confirmation: 'Password123'
       }
 
-      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).not_to be_successful
       expect(response.status).to eq(422)
 
@@ -43,13 +43,13 @@ RSpec.describe 'Create users, email, password ', type: :request do
     end
 
     it 'returns error for invalid parameters, non matching password' do
-      invalid_new_user_params = {
+      invalid_new_user_payload = {
         email: 'stran@gmail.com',
         password: 'Password123',
         password_confirmation: 'DoesNotMatch'
       }
 
-      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       expect(response).not_to be_successful
       expect(response.status).to eq(422)
 
@@ -59,14 +59,14 @@ RSpec.describe 'Create users, email, password ', type: :request do
     end
 
     it 'returns error for invalid parameters, email taken' do
-      invalid_new_user_params = {
+      invalid_new_user_payload = {
         email: 'stran@gmail.com',
         password: 'Password123',
         password_confirmation: 'Password123'
       }
 
-      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
-      post '/api/v0/users', params: invalid_new_user_params.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/api/v0/users', params: invalid_new_user_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
 
       expect(response.status).to eq(422)
 
