@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Road trip based on json payload in body', type: :request do
-  describe 'POST /api/v0/road_trip' do
+  describe 'POST /api/v0/road_trip', :vcr do
     it 'creates a new road trip and returns the expected response' do
       valid_payload = {
         origin: 'Cincinnati,OH',
@@ -19,12 +19,26 @@ RSpec.describe 'Road trip based on json payload in body', type: :request do
       expect(data[:data]).to have_key(:id)
       expect(data[:data][:id]).to be_nil
       expect(data[:data]).to have_key(:type)
-      expect(data[:data][:type]).to eq('roadtrip')
+      expect(data[:data][:type]).to eq('road_trip')
       expect(data[:data]).to have_key(:attributes)
-      expect(data[:data][:attributes]).to have_key(:start_city)
-      expect(data[:data][:attributes]).to have_key(:end_city)
-      expect(data[:data][:attributes]).to have_key(:travel_time)
-      expect(data[:data][:attributes]).to have_key(:weather_at_eta)
+
+      attributes = data[:data][:attributes]
+      expect(attributes).to have_key(:start_city)
+      expect(attributes[:start_city]).to be_a(String)
+      expect(attributes).to have_key(:end_city)
+      expect(attributes[:end_city]).to be_a(String)
+      expect(attributes).to have_key(:travel_time)
+      expect(attributes[:travel_time]).to be_a(String)
+      expect(attributes).to have_key(:weather_at_eta)
+      expect(attributes[:weather_at_eta]).to be_a(Hash)
+
+      destination_weather = data[:data][:attributes][:weather_at_eta]
+      expect(destination_weather).to have_key(:datetime)
+      expect(destination_weather[:datetime]).to be_a(String)
+      expect(destination_weather).to have_key(:temperature)
+      expect(destination_weather[:temperature]).to be_a(Float)
+      expect(destination_weather).to have_key(:condition)
+      expect(destination_weather[:condition]).to be_a(String)
     end
 
     it 'returns 401 Unauthorized, missing API Key' do # CREATE test for missing API Key also
@@ -34,7 +48,7 @@ RSpec.describe 'Road trip based on json payload in body', type: :request do
       }
 
       post '/api/v0/road_trip', body: invalid_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
-
+      expect(response).to be_successful
       expect(response.status).to eq(401)
     end
   end
