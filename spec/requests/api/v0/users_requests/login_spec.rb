@@ -34,7 +34,7 @@ RSpec.describe "Create users, email, password ", type: :request do
       errors = JSON.parse(response.body, symbolize_names: true)
       expect(errors).to have_key(:errors)
       expect(errors[:errors]).to be_an(Array)
-      expect(errors[:errors].first[:detail]).to include("Invalid credentials")
+      expect(errors[:errors].first).to include('Invalid credentials')
     end
 
     it 'returns error for invalid credentials, wrong email, same message for wrong email or password' do
@@ -48,7 +48,7 @@ RSpec.describe "Create users, email, password ", type: :request do
       errors = JSON.parse(response.body, symbolize_names: true)
       expect(errors).to have_key(:errors)
       expect(errors[:errors]).to be_an(Array)
-      expect(errors[:errors].first[:detail]).to include("Invalid credentials")
+      expect(errors[:errors].first).to include('Invalid credentials')
     end
   end
 end
