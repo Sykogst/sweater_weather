@@ -42,7 +42,8 @@ RSpec.describe RoadTripFacade, type: :facade do
       expected_arrival_time = current_time + 2.hours + 30.minutes
       arrival_time = facade.calculate_arrival_time(origin, destination)
 
-      expect(arrival_time).to eq('2024-01-28 14:00')
+      expect(arrival_time[:forecastday_date]).to eq('2024-01-28')
+      expect(arrival_time[:hour_time]).to eq('2024-01-28 14:00')
     end
   end
 end
