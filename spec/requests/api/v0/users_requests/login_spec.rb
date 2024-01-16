@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "Create users, email, password ", type: :request do
-  describe "POST /api/v0/sessions" do
+RSpec.describe 'Create users, email, password ', type: :request do
+  describe 'POST /api/v0/sessions' do
     it 'valid credentials are sent, then has response' do
       user = create(:user, email: 'test@email.com', password: 'password', password_confirmation: 'password')
       valid_session_params = { email: user.email, password: user.password }

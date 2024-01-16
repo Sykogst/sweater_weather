@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v0 do
       get '/forecast', to: 'forecast#weather_forecast'
+      post '/road_trip', to: 'road_trip#create'
       resources :users, only: [:create]
       resources :sessions, only: [:create]
     end

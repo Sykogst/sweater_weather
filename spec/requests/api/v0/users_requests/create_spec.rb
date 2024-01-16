@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "Create users, email, password ", type: :request do
-  describe "POST /api/v0/users" do
+RSpec.describe 'Create users, email, password ', type: :request do
+  describe 'POST /api/v0/users' do
     it 'creates new user with valid parameters' do
       user = build(:user)
       valid_new_user_params = {
