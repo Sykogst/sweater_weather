@@ -42,7 +42,7 @@ RSpec.describe 'Road trip based on json payload in body', type: :request do
       expect(destination_weather[:condition]).to be_a(String)
     end
 
-    xit 'returns 401 Unauthorized, missing API Key' do # CREATE another test for incorrect API Key 
+    it 'returns 401 Unauthorized, missing API Key' do # CREATE another test for incorrect API Key 
       user = create(:user)
       invalid_payload = {
         origin: 'Cincinnati,OH',
@@ -50,8 +50,23 @@ RSpec.describe 'Road trip based on json payload in body', type: :request do
       }
 
       post '/api/v0/road_trip', params: invalid_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
-      expect(response).to be_successful
+      expect(response).to_not be_successful
       expect(response.status).to eq(401)
+      expect(response.body).to include('Unauthorized - Missing API key')
+    end
+
+    it 'returns 401 Unauthorized, missing API Key' do # CREATE another test for incorrect API Key 
+      user = create(:user)
+      invalid_payload = {
+        origin: 'Cincinnati,OH',
+        destination: 'Chicago,IL',
+        api_key: 'WrongKey'
+      }
+
+      post '/api/v0/road_trip', params: invalid_payload.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      expect(response).to_not be_successful
+      expect(response.status).to eq(401)
+      expect(response.body).to include('Unauthorized - Invalid API key')
     end
   end
 end
