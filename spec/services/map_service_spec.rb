@@ -14,5 +14,13 @@ describe MapService, type: :service do
       expect(coordinate_results).to be_a(String)
       expect(coordinate_results).to eq('39.74001,-104.99202')
     end
+
+    it '#get_directions, returns directions data from origin to destination' do
+      origin = 'denver,co'
+      destination = 'boulder,co'
+      direction_results = MapService.new.get_directions(origin, destination)
+
+      expect(direction_results).to be_a(Hash)
+    end
   end
 end

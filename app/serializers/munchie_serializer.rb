@@ -1,7 +1,7 @@
 # app/serializers/munchie_attributes_serializer.rb
 class MunchieSerializer
-  def initialize(munchie)
-    @munchie = munchie
+  def initialize(munchie_data)
+    @data = munchie_data
   end
 
   def to_json
@@ -10,16 +10,16 @@ class MunchieSerializer
         id: nil,
         type: 'munchie',
         attributes: {
-          destination_city: @munchie.destination_city,
+          destination_city: @data.destination_city,
           forecast: {
-            summary: @munchie.forecast[:summary],
-            temperature: @munchie.forecast[:temperature]
+            summary: @data.forecast[:summary],
+            temperature: @data.forecast[:temperature]
           },
           restaurant: {
-            name: @munchie.name,
-            address: @munchie.address,
-            rating: @munchie.rating,
-            reviews: @munchie.reviews
+            name: @data.name,
+            address: @data.address,
+            rating: @data.rating,
+            reviews: @data.reviews
           }
         }
       }

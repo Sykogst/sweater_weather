@@ -1,8 +1,12 @@
 class Api::V0::SessionsController < ApplicationController
   def create
-    user = User.find_by(email: params[:email])
+    # QUESTION: Does using request body over params[:email], etc ensure only json payload in body can be used?
+    payload = JSON.parse(request.body.read, symbolize_names: true)
+    email = payload[:email]
+    password = payload[:password]
 
-    if user && user.authenticate(params[:password])
+    user = User.find_by(email: email)
+    if user && user.authenticate(password)
       render json: { data: { type: 'users', id: user.id.to_s, attributes: { email: user.email, api_key: user.api_key } } }, status: :ok
     else
       unauthorized_error

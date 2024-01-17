@@ -60,13 +60,13 @@ describe 'Get weather for a city', type: :request do
       end
     end
 
-    xit 'returns an unsuccessful response, 404, for an invalid location' do
-      get '/api/v0/forecast', params: @invalid_location_params
-      expect(response.status).to eq(404)
+    # it 'returns an unsuccessful response, 404, for an invalid location' do
+    #   get '/api/v0/forecast', params: @invalid_location_params
+    #   expect(response.status).to eq(404)
     
-      error_response = JSON.parse(response.body, symbolize_names: true)
-      expect(error_response).to have_key(:error)
-      expect(error_response[:error]).to eq('Location not found')
-    end
+    #   error_response = JSON.parse(response.body, symbolize_names: true)
+    #   expect(error_response).to have_key(:error)
+    #   expect(error_response[:error]).to eq('Location not found')
+    # end
   end
 end

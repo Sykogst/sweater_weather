@@ -1,4 +1,3 @@
-# spec/poros/munchie_attributes_spec.rb
 require 'rails_helper'
 
 RSpec.describe MunchieAttributes do
