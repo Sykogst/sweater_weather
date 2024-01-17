@@ -1,4 +1,4 @@
-class MunchieSerializer
+class RoadTripSerializer
   def initialize(road_trip_data)
     @data = road_trip_data
   end

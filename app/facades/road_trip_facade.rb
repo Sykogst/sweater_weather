@@ -32,13 +32,13 @@ class RoadTripFacade
 
     if arrival_data == 'Impossible Route'
       weather_at_eta = {
-        datetime: 'Impossible Route',
+        datetime: arrival_data[:hour_time],
         temperature: 'Impossible Route',
         condition: 'Impossible Route'
       }
     elsif past_forecast?(forecast_data, arrival_data)
       weather_at_eta = {
-        datetime: 'Arrival Past Last Forecast',
+        datetime: arrival_data[:hour_time],
         temperature: 'Arrival Past Last Forecast',
         condition: 'Arrival Past Last Forecast'
       }
@@ -89,7 +89,7 @@ class RoadTripFacade
       }
     else
       weather_at_eta = {
-        datetime: 'No Weather Data',
+        datetime: matching_hour[:time],
         temperature: 'No Weather Data',
         condition: 'No Weather Data'
       }
