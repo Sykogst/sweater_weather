@@ -170,91 +170,92 @@ To get a local copy up and running follow these simple example steps.
     ```
   - Example Response:
     ```json
-{
-    "data": {
-        "id": null,
-        "type": "forecast",
-        "attributes": {
-            "current_weather": {
-                "last_updated": "2024-01-15 12:00",
-                "temperature": -5.8,
-                "feels_like": -23.0,
-                "humidity": 77,
-                "uv": 1.0,
-                "visibility": 0.0,
-                "condition": {
-                    "text": "Light snow",
-                    "icon": "//cdn.weatherapi.com/weather/64x64/day/326.png"
-                }
-            },
-            "daily_weather": [
-                {
-                    "date": "2024-01-15",
-                    "sunrise": "07:20 AM",
-                    "sunset": "05:00 PM",
-                    "max_temp": 1.6,
-                    "min_temp": -5.0,
-                    "condition": {
-                        "text": "Heavy snow",
-                        "icon": "//cdn.weatherapi.com/weather/64x64/day/338.png"
-                    }
-                },
-                {
-                    "date": "2024-01-16",
-                    "sunrise": "07:19 AM",
-                    "sunset": "05:01 PM",
-                    "max_temp": 32.4,
-                    "min_temp": -3.3,
-                    "condition": {
-                        "text": "Sunny",
-                        "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png"
-                    }
-                },
-                {
-                    "date": "2024-01-17",
-                    "sunrise": "07:19 AM",
-                    "sunset": "05:02 PM",
-                    "max_temp": 33.1,
-                    "min_temp": 16.5,
-                    "condition": {
-                        "text": "Sunny",
-                        "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png"
-                    }
-                },
-                {
-                    "date": "2024-01-18",
-                    "sunrise": "07:18 AM",
-                    "sunset": "05:03 PM",
-                    "max_temp": 25.8,
-                    "min_temp": 13.7,
-                    "condition": {
-                        "text": "Patchy moderate snow",
-                        "icon": "//cdn.weatherapi.com/weather/64x64/day/329.png"
-                    }
-                },
-                {
-                    "date": "2024-01-19",
-                    "sunrise": "07:18 AM",
-                    "sunset": "05:04 PM",
-                    "max_temp": 29.0,
-                    "min_temp": 11.3,
-                    "condition": {
-                        "text": "Partly cloudy",
-                        "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png"
-                    }
-                }
-            ],
-            "hourly_weather": [
-                {
-                    "time": "00:00",
-                    "temperature": 6.2,
-                    "condition": {
-                        "text": "Partly cloudy",
-                        "icon": "//cdn.weatherapi.com/weather/64x64/night/116.png"
-                    }...
-                }
-            ]
-        }
+  {
+      "data": {
+          "id": null,
+          "type": "forecast",
+          "attributes": {
+              "current_weather": {
+                  "last_updated": "2024-01-15 12:00",
+                  "temperature": -5.8,
+                  "feels_like": -23.0,
+                  "humidity": 77,
+                  "uv": 1.0,
+                  "visibility": 0.0,
+                  "condition": {
+                      "text": "Light snow",
+                      "icon": "//cdn.weatherapi.com/weather/64x64/day/326.png"
+                  }
+              },
+              "daily_weather": [
+                  {
+                      "date": "2024-01-15",
+                      "sunrise": "07:20 AM",
+                      "sunset": "05:00 PM",
+                      "max_temp": 1.6,
+                      "min_temp": -5.0,
+                      "condition": {
+                          "text": "Heavy snow",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/day/338.png"
+                      }
+                  },
+                  {
+                      "date": "2024-01-16",
+                      "sunrise": "07:19 AM",
+                      "sunset": "05:01 PM",
+                      "max_temp": 32.4,
+                      "min_temp": -3.3,
+                      "condition": {
+                          "text": "Sunny",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png"
+                      }
+                  },
+                  {
+                      "date": "2024-01-17",
+                      "sunrise": "07:19 AM",
+                      "sunset": "05:02 PM",
+                      "max_temp": 33.1,
+                      "min_temp": 16.5,
+                      "condition": {
+                          "text": "Sunny",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png"
+                      }
+                  },
+                  {
+                      "date": "2024-01-18",
+                      "sunrise": "07:18 AM",
+                      "sunset": "05:03 PM",
+                      "max_temp": 25.8,
+                      "min_temp": 13.7,
+                      "condition": {
+                          "text": "Patchy moderate snow",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/day/329.png"
+                      }
+                  },
+                  {
+                      "date": "2024-01-19",
+                      "sunrise": "07:18 AM",
+                      "sunset": "05:04 PM",
+                      "max_temp": 29.0,
+                      "min_temp": 11.3,
+                      "condition": {
+                          "text": "Partly cloudy",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png"
+                      }
+                  }
+              ],
+              "hourly_weather": [
+                  {
+                      "time": "00:00",
+                      "temperature": 6.2,
+                      "condition": {
+                          "text": "Partly cloudy",
+                          "icon": "//cdn.weatherapi.com/weather/64x64/night/116.png"
+                      }...
+                  }
+              ]
+          }
+      }
     ```
 
 ### User Registration
