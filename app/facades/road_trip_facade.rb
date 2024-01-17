@@ -1,4 +1,11 @@
 class RoadTripFacade
+  def road_trip(origin, destination)
+    directions_data_result = directions_data(origin, destination)
+    weather_at_eta_data_result = weather_at_eta(origin, destination)
+  
+    RoadTrip.new(directions_data_result, weather_at_eta_data_result)
+  end
+
   def directions_data(origin, destination)
     directions = MapService.new.get_directions(origin, destination)
     locations = directions[:route][:locations]
@@ -18,10 +25,10 @@ class RoadTripFacade
     end
   end
 
-  def weather_at_eta(origin_place, destination_place)
-    lat_lon = MapService.new.get_coordinates(destination_place)
+  def weather_at_eta(origin, destination)
+    lat_lon = MapService.new.get_coordinates(destination)
     forecast_data = WeatherService.new.get_forecast(lat_lon, 7) # Max for free API is 7 days out
-    arrival_data = calculate_arrival_time(origin_place, destination_place)
+    arrival_data = calculate_arrival_time(origin, destination)
 
     if arrival_data == 'Impossible Route'
       weather_at_eta = {

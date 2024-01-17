@@ -68,12 +68,20 @@ RSpec.describe RoadTripFacade, type: :facade do
     end
     
     it '#past_forecast?, returns false if arrival time is within 7 days from current time' do
-    facade = RoadTripFacade.new
-    current_time = Time.now
-    forecast_data = { location: { local_time: current_time } }
-    arrival_data = { forecastday_date: (current_time + 6.days).to_time } # Convert to Time
-    past_forecast = facade.past_forecast?(forecast_data, arrival_data)
-    expect(past_forecast).to eq(false)
-  end
+      facade = RoadTripFacade.new
+      current_time = Time.now
+      forecast_data = { location: { local_time: current_time } }
+      arrival_data = { forecastday_date: (current_time + 6.days).to_time } # Convert to Time
+      past_forecast = facade.past_forecast?(forecast_data, arrival_data)
+      expect(past_forecast).to eq(false)
+    end
+
+    it '#road_trip, returns a RoadTrip object with directions and weather data', :vcr do
+      origin = 'denver,co'
+      destination = 'boulder,co'
+      road_trip = RoadTripFacade.new.road_trip(origin, destination)
+    
+      expect(road_trip).to be_a(RoadTrip)
+    end
   end
 end
