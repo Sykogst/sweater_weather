@@ -32,7 +32,7 @@ class RoadTripFacade
 
     if arrival_data == 'Impossible Route'
       weather_at_eta = {
-        datetime: arrival_data[:hour_time],
+        datetime: 'Impossible Route',
         temperature: 'Impossible Route',
         condition: 'Impossible Route'
       }
@@ -63,6 +63,7 @@ class RoadTripFacade
     end
   end
 
+  # THIS DOES NOT SEEM TO BE WORKING
   def past_forecast?(forecast_data, arrival_data)
     today_date_time = forecast_data.dig(:location, :local_time)
   
@@ -89,7 +90,7 @@ class RoadTripFacade
       }
     else
       weather_at_eta = {
-        datetime: matching_hour[:time],
+        datetime: full_date,
         temperature: 'No Weather Data',
         condition: 'No Weather Data'
       }
