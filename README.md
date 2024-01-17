@@ -11,17 +11,6 @@
   <a href="https://github.com/Sykogst/sweater_weather">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
-
-    <br />
-    <a href="https://github.com/Sykogst/sweater_weather"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/Sykogst/sweater_weather">View Demo</a>
-    ·
-    <a href="https://github.com/Sykogst/sweater_weather/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Sykogst/sweater_weather/issues">Request Feature</a>
-  </p>
 </div>
 
 
